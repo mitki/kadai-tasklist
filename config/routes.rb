@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  get 'users/new'
-  get 'sessions/new'
+  
   root to: 'tasks#index'
   
   get 'signup', to: 'users#new'
-  resources :users, only: [:index, :show, :new, :create]
+  resources :users, only: [ :new, :create]
   
   get 'login' , to: 'sessions#new'
   post 'login' , to: 'sessions#create'
