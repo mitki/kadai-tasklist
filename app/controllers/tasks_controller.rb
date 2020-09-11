@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :update, :destroy]
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :correct_user, only: [:show, :apdate, :destroy]
+  before_action :correct_user, only: [:show, :edit, :update, :destroy]
   
   def index
     if logged_in?
@@ -19,15 +19,16 @@ class TasksController < ApplicationController
     
     if @task.save
       flash[:succes] = 'Task が正常に投稿されました'
-      redirect_to @task
+      redirect_to root_url
     else
+      @microposts = current_user.microposts.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'Task が投稿されませんでした'
       render :new
     end
   end
 
   def update
-    if @task.update
+    if @task.update(task_params)
       flash[:success] = 'Task は正常に更新されました'
       redirect_to @task
     else
