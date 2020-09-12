@@ -43,7 +43,7 @@ class TasksController < ApplicationController
   private
   
   
-  #Storong Parameter
+  #Strong Parameter
   def task_params
     params.require(:task).permit(:content, :status)
   end
